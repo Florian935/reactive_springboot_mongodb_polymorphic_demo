@@ -1,13 +1,15 @@
 package com.florian935.mongodb.reactive.polymorphism.controller;
 
 import com.florian935.mongodb.reactive.polymorphism.domain.WeightExercise;
-import com.florian935.mongodb.reactive.polymorphism.repository.WeightExerciseRepository;
+import com.florian935.mongodb.reactive.polymorphism.service.WeightExerciseService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -17,13 +19,28 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class WeightExerciseController {
 
-    WeightExerciseRepository weightExerciseRepository;
+    WeightExerciseService weightExerciseService;
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(OK)
     @ResponseBody
     Flux<WeightExercise> findAll() {
 
-        return weightExerciseRepository.findAll();
+        return weightExerciseService.findAll();
+    }
+
+    @DeleteMapping
+    @ResponseStatus(NO_CONTENT)
+    Mono<Void> deleteAll() {
+
+        return weightExerciseService.deleteAll();
+    }
+
+    @GetMapping(path = "count", produces = APPLICATION_JSON_VALUE)
+    @ResponseStatus(OK)
+    @ResponseBody
+    Mono<Long> count() {
+
+        return weightExerciseService.count();
     }
 }
