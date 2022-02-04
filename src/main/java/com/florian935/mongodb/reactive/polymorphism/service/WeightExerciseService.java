@@ -1,4 +1,6 @@
 package com.florian935.mongodb.reactive.polymorphism.service;
 
-public interface WeightExerciseService extends ExerciseService {
+import com.florian935.mongodb.reactive.polymorphism.domain.WeightExercise;
+
+public interface WeightExerciseService extends CrudService<WeightExercise, String> {
 }
